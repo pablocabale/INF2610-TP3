@@ -23,11 +23,14 @@ void* door(void* args){
     while(1){
         sem_wait(&sem_critical);
         int key = rand() % 30;
-        if(try_lock(key))
+        if(try_lock(key)){
+            sem_post(&sem_critical); // Libérer le sémaphore avant de quitter
             pthread_exit(NULL);
+        }
         sem_post(&sem_critical);
     }
 }
+
 int main() {
 
     sem_init(&sem_critical, 0, 1); 

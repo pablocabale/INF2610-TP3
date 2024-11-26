@@ -47,7 +47,7 @@ void* cons(void* arg) {
         //int first = (left < right) ? left : right;
         //int second = (left < right) ? right : left;
         
-        pthread_mutex_lock(&locks[left]); //pthread_mutex_lock(&locks[first]);
+        pthread_mutex_lock(&locks[left]); //pthread_mutex_lock(&locks[first]); //possibilité de deadlock
         sleep(1);
         pthread_mutex_lock(&locks[right]); //pthread_mutex_lock(&locks[second]);
 
