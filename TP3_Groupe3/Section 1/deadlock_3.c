@@ -1,3 +1,19 @@
+/*
+Exclusion mutuelle: le sémaphore mutex est une ressource exclusive (ligne 26). Un seul thread peut accéder à la section critique à la fois.
+
+Détention et attente: Un thread peut entrer dans un boucle infinie (ligne 87) tout en detenant le semaphore, 
+ce qui empêche les autres threads d'accéder à la section critique.
+
+Pas de réquisition: Les threads ne peuvent pas réquisitionner le sémaphore mutex.
+
+Attente circulaire: Il n'y a pas d'attente circulaire dans ce code.
+
+Correction de l'interblocage: Il n'y a pas forcement d'interblocage dans ce code, mais il est possible
+d'avoir un interblocage si un thread entre dans une boucle infinie (ligne 87) avec la variable key = 17 et a > 0.
+
+Pour éviter cela, il faudrais enlever le while(1) (ligne 87) ou faire une gestion qui permet de sortir de la boucle infinie.
+*/
+
 #include <stdio.h>
 #include <unistd.h>
 #include <signal.h>
@@ -7,7 +23,7 @@
 #include <semaphore.h>
 #define N_THREADS 10
 
-sem_t mutex;
+sem_t mutex; // resource exclusive
 
 int flag = 0;
 int key;
